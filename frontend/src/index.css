@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.wrap-Hero {
+  background: linear-gradient(
+      150deg,
+      rgba(27, 27, 27, 0.9),
+      rgba(27, 27, 27, 0.1)
+    ),
+    url(/Hero.png) no-repeat 100%;
+  background-size: cover;
+}
