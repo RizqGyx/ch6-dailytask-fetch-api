@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 function Navbar() {
   return (
-    <nav className="bg-white text-violet-900 font-bold fixed w-full top-0 z-50 ">
+    <nav className="bg-white text-violet-900 font-bold fixed w-full top-0 z-50 border-b-[2px] border-zinc-300">
       <div className="navbar w-11/12 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">

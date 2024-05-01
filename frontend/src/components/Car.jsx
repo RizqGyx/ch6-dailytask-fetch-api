@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Card from "./Card";
 
-const Car = ({ data, pagination }) => {
+const Car = ({ data }) => {
   const [showAll, setShowAll] = useState(false);
   const [displayCount, setDisplayCount] = useState(6);
+
+  console.log(data);
 
   const handleLoadMore = () => {
     setShowAll(true);
@@ -20,7 +22,9 @@ const Car = ({ data, pagination }) => {
         Our Featured Car
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* Disini Pengenya Sih Letak Card Mapping */}
+        {data.cars.slice(0, displayCount).map((car) => (
+          <Card data={car} />
+        ))}
       </div>
       {!showAll && (
         <motion.button

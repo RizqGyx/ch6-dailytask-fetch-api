@@ -8,25 +8,18 @@ function Hero() {
         <div className="hero-content">
           <div className="text-center">
             <motion.h1
-              variants={{
-                hidden: { opacity: 0, y: -75 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              initial="hidden"
-              animate="visible"
+              initial={{ opacity: 0, y: -75 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.25 }}
               className="text-4xl md:text-6xl font-bold text-white lg:w-3/4 m-auto"
             >
               Sewa & Rental Mobil Terbaik di kawasan (Lokasimu)
             </motion.h1>
             <motion.p
-              variants={{
-                hidden: { opacity: 0, y: 75 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              initial="hidden"
-              animate="visible"
-              transition={{ duration: 0.75, delay: 1 }}
+              initial={{ opacity: 0, y: 75 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.25 }}
+              viewport={{ once: false }}
               className="py-6 text-base md:text-lg text-yellow-100 lg:w-3/4 m-auto border-t-4 mt-2 border-violet-700 md:rounded-full"
             >
               Selamat datang di Binar Car Rental. Kami menyediakan mobil
@@ -35,8 +28,9 @@ function Hero() {
             </motion.p>
             <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 1.5 }}
+              viewport={{ once: false }}
               className="flex gap-8 justify-center"
             >
               <motion.a whileHover={{ scale: 1.1 }} href="/#restaurant">

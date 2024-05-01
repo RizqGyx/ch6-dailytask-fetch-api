@@ -69,14 +69,12 @@ const findCars = async (req, res, next) => {
 
     res.status(200).json({
       status: "Success",
-      data: {
-        totalData: count,
-        cars,
-        pagination: {
-          totalPages,
-          pageNum,
-          limitData,
-        },
+      totalData: count,
+      cars,
+      pagination: {
+        totalPages,
+        pageNum,
+        limitData,
       },
     });
   } catch (err) {
@@ -178,12 +176,12 @@ const deleteCar = async (req, res, next) => {
 
 const createCar = async (req, res, next) => {
   try {
-    const userID = req.user.userId;
+    // const userID = req.user.userId;
     const car = await Car.create({
       id: generateRandomId(),
       ...req.body,
-      createdByID: userID,
-      lastUpdatedByID: userID,
+      // createdByID: userID,
+      // lastUpdatedByID: userID,
     });
 
     res.status(201).json({

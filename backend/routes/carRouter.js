@@ -9,10 +9,7 @@ const checkId = require("../middlewares/checkId");
 
 const router = express.Router();
 
-router
-  .route("/")
-  .get(Cars.findCars)
-  .post(upload.array("images"), Cars.createCar);
+router.route("/").get(Cars.findCars).post(Cars.createCar);
 router
   .route("/:id")
   .get(checkId(Car), Cars.findCarById)

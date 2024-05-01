@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    event.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
+    navigate("/dashboard");
   };
 
   return (
@@ -15,7 +18,13 @@ const Login = () => {
       <div className="flex flex-col sticky top-40 items-center md:items-end md:mx-20 justify-center px-6 py-8 m-auto md:h-screen lg:py-0">
         <div className="w-full bg-violet-700 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl">
+            <h1 className="flex items-center text-xl gap-5 font-bold leading-tight tracking-tight text-white md:text-2xl">
+              <a
+                href="/"
+                className="bg-black/60 rounded-full p-1 hover:bg-black/80"
+              >
+                <IoMdArrowRoundBack />
+              </a>
               Sign in to your account
             </h1>
             <form

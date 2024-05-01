@@ -3,19 +3,20 @@ import { FaStar, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Card({ data }) {
+  console.log(data);
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    const isRestFavorited = localStorage.getItem(`favorite_${id}`);
+    const isRestFavorited = localStorage.getItem(`favorite_${data.id}`);
     setIsFavorite(isRestFavorited === "true");
-  }, [id]);
+  }, [data]);
 
   const handleFavoriteClick = (event) => {
     const updatedFavorite = !isFavorite;
     setIsFavorite(updatedFavorite);
 
-    localStorage.setItem(`favorite_${id}`, updatedFavorite.toString());
+    localStorage.setItem(`favorite_${data.id}`, updatedFavorite.toString());
 
     event.stopPropagation();
   };
