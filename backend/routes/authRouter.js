@@ -14,6 +14,6 @@ router.post(
 );
 router.post("/register/member", validateRole, Auth.registerMember);
 router.post("/login", Auth.login);
-router.get("/me", Authenticate, Auth.authenticate);
+router.get("/checktoken", Authenticate, Auth.authenticate);
 
 module.exports = router;

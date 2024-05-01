@@ -19,3 +19,14 @@ body {
     url(/Hero.png) no-repeat 100%;
   background-size: cover;
 }
+
+#login {
+  min-height: 100vh;
+  background: linear-gradient(
+      150deg,
+      rgba(27, 27, 27, 0.1),
+      rgba(27, 27, 27, 0.7)
+    ),
+    url(/test.jpg) no-repeat bottom;
+  background-size: cover;
+}

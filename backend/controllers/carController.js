@@ -36,12 +36,12 @@ const findCars = async (req, res, next) => {
     const offset = (pageNum - 1) * limitData;
 
     const whereClause = {};
-    if (name) whereClause.name = { [Op.like]: `%${name}%` };
+    if (name) whereClause.name = { [Op.iLike]: `%${name}%` };
     if (rentperday) whereClause.rentperday = rentperday;
     if (capacity) whereClause.capacity = capacity;
-    if (size) whereClause.size = { [Op.like]: `%${size}%` };
+    if (size) whereClause.size = { [Op.iLike]: `%${size}%` };
     if (transmission)
-      whereClause.transmission = { [Op.like]: `%${transmission}%` };
+      whereClause.transmission = { [Op.iLike]: `%${transmission}%` };
     if (year) whereClause.year = year;
     if (createdByID) whereClause.createdByID = createdByID;
     if (lastUpdatedByID) whereClause.lastUpdatedByID = lastUpdatedByID;

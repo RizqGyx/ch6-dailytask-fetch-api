@@ -1,11 +1,12 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 function Footer() {
   return (
     <footer className="bg-white text-black/50 font-bold absolute bottom-0 w-full">
       <div className="footer w-11/12 mx-auto px-5 py-10 justify-between">
         <aside>
-          <img src="/Logo.png" alt="Logo Brand" className="h-[60px]" />
+          <img src="/Logo.png" alt="Logo Brand" className="h-[50px]" />
           <p>
             PT. Lentera Bangsa Benderang
             <br />
@@ -15,27 +16,28 @@ function Footer() {
         <nav>
           <header className="footer-title text-xl text-black">Company</header>
           <a className="link link-hover" href="/#">
-            Home
+            Beranda
           </a>
           <a className="link link-hover" href="/#about">
-            About Us
+            Tentang Kami
           </a>
-          <a className="link link-hover" href="/#restaurant">
-            Restaurant
+          <a className="link link-hover" href="/#car">
+            Mobil
           </a>
-          <a className="link link-hover">Book</a>
+          <a className="link link-hover" href="/#rent">
+            Sewa
+          </a>
         </nav>
         <nav>
           <header className="footer-title text-xl text-black">Company</header>
           <a className="link link-hover">FAQ</a>
-          <a className="link link-hover">Receipt</a>
-          <a className="link link-hover">Download</a>
+          <a className="link link-hover">Location</a>
+          <a className="link link-hover">Privacy & Policy</a>
         </nav>
         <nav>
           <header className="footer-title text-xl text-black">Support</header>
           <a className="link link-hover">Contact</a>
           <a className="link link-hover">Feedback</a>
-          <a className="link link-hover">Home Delivery</a>
         </nav>
         <nav>
           <header className="footer-title text-xl text-black">
@@ -46,15 +48,18 @@ function Footer() {
               className="input input-bordered join-item bg-white"
               placeholder="Email"
             />
-            <button className="btn join-item rounded-r-full bg-red-500 border-none hover:bg-orange-700 text-white">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              className="btn join-item rounded-r-full bg-violet-900 border-none hover:bg-violet-700 text-white"
+            >
               Send
-            </button>
+            </motion.button>
           </div>
         </nav>
       </div>
       <div className="bg-[#201658] text-white p-5">
         <h1 className="text-center font-bold">
-          © 2023 Copyright - Muhammad Rizki
+          © 2024 Copyright - Muhammad Rizki
         </h1>
       </div>
     </footer>

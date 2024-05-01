@@ -36,25 +36,34 @@ function Navbar() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-xl">
             <li>
-              <a className="hover:bg-violet-900 hover:text-white" href="/">
+              <a
+                className="transition duration-500 delay-100 hover:bg-violet-900 hover:text-white ease-out"
+                href="/"
+              >
                 Beranda
               </a>
             </li>
             <li>
               <a
-                className="hover:bg-violet-900 hover:text-white"
+                className="transition duration-500 delay-100 hover:bg-violet-900 hover:text-white ease-out"
                 href="/#about"
               >
                 Tentang Kami
               </a>
             </li>
             <li>
-              <a className="hover:bg-violet-900 hover:text-white" href="/#car">
+              <a
+                className="transition duration-500 delay-100 hover:bg-violet-900 hover:text-white ease-out"
+                href="/#car"
+              >
                 Mobil
               </a>
             </li>
             <li>
-              <a className="hover:bg-violet-900 hover:text-white" href="/#rent">
+              <a
+                className="transition duration-500 delay-100 hover:bg-violet-900 hover:text-white ease-out"
+                href="/#rent"
+              >
                 Sewa
               </a>
             </li>
@@ -67,8 +76,9 @@ function Navbar() {
           <motion.a
             whileHover={{ scale: 1.05 }}
             className="btn rounded-full px-10 text-xl hover:bg-violet-700 bg-violet-900 border-none text-white"
+            href="/login"
           >
-            Admin
+            Sign In
           </motion.a>
         </div>
       </div>

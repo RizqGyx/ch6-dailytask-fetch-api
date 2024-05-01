@@ -157,11 +157,37 @@ const login = async (req, res, next) => {
 
 const authenticate = async (req, res) => {
   try {
+    const userId = req.user.userId;
+    const userRole = req.user.role;
+
+    let cars = [];
+    let totalCreateCarData = 0;
+
+    if (userRole === "admin" || userRole === "superadmin") {
+      cars = await Car.findAll({
+        where: {
+          createdByID: userId,
+        },
+      });
+      totalCreateCarData = cars.length;
+    }
+
+    let responseData = {};
+    if (userRole === "admin" || userRole === "superadmin") {
+      responseData = {
+        totalCreateCarData,
+        cars,
+        user: req.user,
+      };
+    } else {
+      responseData = {
+        user: req.user,
+      };
+    }
+
     res.status(200).json({
       status: "Success",
-      data: {
-        user: req.user,
-      },
+      data: responseData,
     });
   } catch (err) {
     next(new ApiError(err.message, 500));

@@ -1,6 +1,7 @@
 const { User } = require("../models");
 const imagekit = require("../libs/imagekit");
 const ApiError = require("../utils/apiError");
+const { Op } = require("sequelize");
 
 const findUsers = async (req, res, next) => {
   try {
@@ -11,10 +12,10 @@ const findUsers = async (req, res, next) => {
     const offset = (pageNum - 1) * limitData;
 
     const whereClause = {};
-    if (name) whereClause.name = { [Op.like]: `%${name}%` };
+    if (name) whereClause.name = { [Op.iLike]: `%${name}%` };
     if (age) whereClause.age = age;
-    if (city) whereClause.city = { [Op.like]: `%${city}%` };
-    if (address) whereClause.address = { [Op.like]: `%${address}%` };
+    if (city) whereClause.city = { [Op.iLike]: `%${city}%` };
+    if (address) whereClause.address = { [Op.iLike]: `%${address}%` };
     if (phone) whereClause.phone = phone;
     if (role) whereClause.role = role;
 

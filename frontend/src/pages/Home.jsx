@@ -6,13 +6,15 @@ import Car from "../components/Car";
 import Footer from "../components/Footer";
 
 const Home = ({ fetch }) => {
+  const { cars, pagination } = fetch;
+
   return (
     <div className="relative flex flex-col gap-4 min-h-screen">
       <Navbar />
       <Hero />
       <Aboutus />
-      <Car data={fetch} />
-      {/* <Footer /> */}
+      <Car data={cars} pagination={pagination} />
+      <Footer />
     </div>
   );
 };
