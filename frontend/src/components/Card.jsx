@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaStar, FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Card({ data }) {

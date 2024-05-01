@@ -15,7 +15,13 @@ function App() {
         <Route path="/car/:id" element={<DetailCar />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="*" element={<div>For 404 Not Found</div>} />
+        <Route path="/dashboard/car" element={<Car />} />
+        <Route
+          path="*"
+          element={
+            <div className="grid place-items-center">For 404 Not Found</div>
+          }
+        />
       </Routes>
     </>
   );

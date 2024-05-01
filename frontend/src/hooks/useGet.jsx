@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const useGet = () => {
@@ -11,6 +11,7 @@ const useGet = () => {
     let datas;
 
     try {
+      setLoading(true);
       const response = await axios.get(`${BASE_URL}${url}`);
       datas = await response.data;
     } catch (error) {
