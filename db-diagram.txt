@@ -10,6 +10,8 @@ Table Cars {
   transmission string
   year integer
   photo text
+  createdByID integer
+  lastUpdatedByID integer
   createdAt timestamp
   updatedAt timestamp
 }

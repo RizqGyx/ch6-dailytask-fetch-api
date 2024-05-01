@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   Auth.init(
     {
-      userId: {
+      id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false,
+        autoIncrement: true,
       },
+      userId: DataTypes.INTEGER,
       email: {
         type: DataTypes.STRING,
         allowNull: false,
