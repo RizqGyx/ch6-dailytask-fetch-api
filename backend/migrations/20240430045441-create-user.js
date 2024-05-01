@@ -2,47 +2,41 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Cars", {
+    await queryInterface.createTable("Users", {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING,
-      },
-      rentPerDay: {
         allowNull: false,
+      },
+      age: {
         type: Sequelize.INTEGER,
-      },
-      capacity: {
         allowNull: false,
-        type: Sequelize.INTEGER,
       },
-      size: {
-        allowNull: false,
-        type: Sequelize.ENUM(["Small", "Medium", "Large"]),
-      },
-      transmission: {
-        allowNull: false,
+      city: {
         type: Sequelize.STRING,
-      },
-      year: {
         allowNull: false,
-        type: Sequelize.INTEGER,
       },
-      photo: {
+      address: {
+        type: Sequelize.STRING,
         allowNull: false,
+      },
+      phone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      profileImage: {
         type: Sequelize.TEXT,
-      },
-      createdByID: {
         allowNull: false,
-        type: Sequelize.INTEGER,
       },
-      lastUpdatedByID: {
+      role: {
+        type: Sequelize.ENUM(["Superadmin", "Admin", "Member"]),
         allowNull: false,
-        type: Sequelize.INTEGER,
+        defaultValue: "Member",
       },
       createdAt: {
         allowNull: false,
@@ -55,6 +49,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Cars");
+    await queryInterface.dropTable("Users");
   },
 };

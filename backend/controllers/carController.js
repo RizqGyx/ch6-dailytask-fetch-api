@@ -1,15 +1,32 @@
-const Car = require("../models/car");
+const { Car, User } = require("../models");
 const { generateRandomId } = require("../utils/generateId");
+const ApiError = require("../utils/apiError");
+const imagekit = require("../libs/imagekit");
+const { Op } = require("sequelize");
 
-const getCars = async (req, res) => {
+function sizeValidation(capacity) {
+  if (capacity <= 2) {
+    return "Small";
+  }
+  if (capacity <= 4) {
+    return "Medium";
+  }
+  if (capacity <= 6) {
+    return "Large";
+  }
+}
+
+const findCars = async (req, res, next) => {
   try {
     const {
-      bookId,
-      userId,
-      libraryId,
-      borrowDate,
-      returnDate,
-      status,
+      name,
+      rentperday,
+      capacity,
+      size,
+      transmission,
+      year,
+      createdByID,
+      lastUpdatedByID,
       page,
       limit,
     } = req.query;
@@ -19,21 +36,26 @@ const getCars = async (req, res) => {
     const offset = (pageNum - 1) * limitData;
 
     const whereClause = {};
-    if (bookId) whereClause.bookId = bookId;
-    if (userId) whereClause.userId = userId;
-    if (libraryId) whereClause.libraryId = libraryId;
-    if (borrowDate) whereClause.borrowDate = borrowDate;
-    if (returnDate) whereClause.returnDate = returnDate;
-    if (status) whereClause.status = status;
+    if (name) whereClause.name = { [Op.like]: `%${name}%` };
+    if (rentperday) whereClause.rentperday = rentperday;
+    if (capacity) whereClause.capacity = capacity;
+    if (size) whereClause.size = { [Op.like]: `%${size}%` };
+    if (transmission)
+      whereClause.transmission = { [Op.like]: `%${transmission}%` };
+    if (year) whereClause.year = year;
+    if (createdByID) whereClause.createdByID = createdByID;
+    if (lastUpdatedByID) whereClause.lastUpdatedByID = lastUpdatedByID;
 
     if (req.query.search) {
       whereClause[Op.or] = {
-        bookId: { [Op.like]: `%${req.query.search}%` },
-        userId: { [Op.like]: `%${req.query.search}%` },
-        libraryId: { [Op.like]: `%${req.query.search}%` },
-        borrowDate: { [Op.like]: `%${req.query.search}%` },
-        returnDate: { [Op.like]: `%${req.query.search}%` },
-        status: { [Op.like]: `%${req.query.search}%` },
+        name: { [Op.like]: `%${req.query.search}%` },
+        rentperday: { [Op.like]: `%${req.query.search}%` },
+        capacity: { [Op.like]: `%${req.query.search}%` },
+        size: { [Op.like]: `%${req.query.search}%` },
+        transmission: { [Op.like]: `%${req.query.search}%` },
+        year: { [Op.like]: `%${req.query.search}%` },
+        createdByID: { [Op.like]: `%${req.query.search}%` },
+        lastUpdatedByID: { [Op.like]: `%${req.query.search}%` },
       };
     }
 
@@ -48,9 +70,9 @@ const getCars = async (req, res) => {
     res.status(200).json({
       status: "Success",
       data: {
+        totalData: count,
         cars,
         pagination: {
-          totalData: count,
           totalPages,
           pageNum,
           limitData,
@@ -58,11 +80,11 @@ const getCars = async (req, res) => {
       },
     });
   } catch (err) {
-    next(new ApiError(err.message, 400));
+    return next(new ApiError(err.message, 400));
   }
 };
 
-const getCarById = async (req, res) => {
+const findCarById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const car = await Car.findByPk(id);
@@ -80,75 +102,105 @@ const getCarById = async (req, res) => {
   }
 };
 
-const createCar = async (req, res) => {
+const updateCar = async (req, res, next) => {
+  const {
+    name,
+    rentperday,
+    capacity,
+    transmission,
+    year,
+    createdByID,
+    lastUpdatedByID,
+  } = req.query;
   try {
-    const carData = {
+    const userID = req.user.userId;
+    console.log(userID);
+    const car = await Car.findByPk(req.params.id);
+
+    if (!car) {
+      return next(new ApiError(`Car with ID ${req.params.id} not found`, 404));
+    }
+
+    const size = sizeValidation(capacity);
+
+    await User.update(
+      {
+        name,
+        rentperday,
+        capacity,
+        size,
+        transmission,
+        year,
+        createdByID,
+        lastUpdatedByID: userID,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    const updatedCar = await Car.findByPk(req.params.id);
+
+    res.status(200).json({
+      status: "Success",
+      message: "Car updated successful",
+      updatedCar,
+    });
+  } catch (err) {
+    next(new ApiError(err.message, 400));
+  }
+};
+
+const deleteCar = async (req, res, next) => {
+  try {
+    const car = await Car.findByPk(req.params.id);
+
+    if (!car) {
+      next(new ApiError(`Car with ID ${req.params.id} not found`, 404));
+    }
+
+    await Car.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res.status(200).json({
+      status: "Success",
+      message: "Successfully deleted car",
+    });
+  } catch (err) {
+    next(new ApiError(err.message, 400));
+  }
+};
+
+const createCar = async (req, res, next) => {
+  try {
+    const userID = req.user.userId;
+    const car = await Car.create({
       id: generateRandomId(),
       ...req.body,
-    };
+      createdByID: userID,
+      lastUpdatedByID: userID,
+    });
 
-    const cars = await Cars.create(carData);
-
-    response(201, cars, "Success", "Create New Car Data", req, res, false);
+    res.status(201).json({
+      status: "Success",
+      data: {
+        car,
+      },
+    });
   } catch (err) {
-    response(400, null, "Failed", err.message, req, res);
-  }
-};
-
-const updateCarById = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const cars = await Cars.update(id);
-
-    if (!cars)
-      return response(
-        404,
-        null,
-        "Failed",
-        `Car with ID : ${id} not found`,
-        req,
-        res
-      );
-
-    response(201, cars, "Success", "Create New Car Data", req, res, false);
-  } catch (err) {
-    response(400, null, "Failed", err.message, req, res);
-  }
-};
-
-const deleteCarById = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const cars = await Cars.destroy(id);
-
-    if (!cars)
-      return response(
-        404,
-        null,
-        "Failed",
-        `Car with ID : ${id} not found`,
-        req,
-        res
-      );
-
-    response(
-      200,
-      cars,
-      "Success",
-      `Deleted car with ID : ${id}`,
-      req,
-      res,
-      false
-    );
-  } catch (err) {
-    response(400, null, "Failed", err.message, req, res);
+    next(new ApiError(err.message, 400));
   }
 };
 
 module.exports = {
-  getCars,
-  getCarById,
+  findCars,
+  findCarById,
+  updateCar,
+  deleteCar,
   createCar,
-  updateCarById,
-  deleteCarById,
 };
